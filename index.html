@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="generator" content="Hugo 0.88.1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css"><link rel="stylesheet"href=""https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css ">
+	<link rel="stylesheet " href="css/custom.css ">
+	<link rel="stylesheet " href="css/normalize.css ">
+
+	<title>NaturalSpeech 2</title>
+	<link href="css/bootstrap.min.css " rel="stylesheet ">
+    <style>
+        /* 设置图片容器的样式 */
+      .image-container {
+            width: 100%;
+            overflow: auto;
+        }
+
+        /* 设置每幅图片及其标题的样式 */
+      .image-wrapper1 {
+            float: left;
+            width: 48%;
+            margin: 1%;
+            text-align: center;
+        }
+       .image-wrapper2 {
+            float: left;
+            width: 48%;
+            margin: 1%;
+            text-align: center;
+        }
+        /* 设置图片的样式 */
+      .image-wrapper1 img {
+            max-width: 61.5%;
+            height: auto;
+        }
+       .image-wrapper2 img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* 设置图片标题的样式 */
+      .image-caption {
+            margin-top: 5px;
+        }
+    </style>
+
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1091.0 " data-gr-ext-installed="">
+
+<div class="container " >
+<header role="banner ">
+</header>
+<main role="main ">
+<article itemscope itemtype="https://schema.org/BlogPosting ">
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded ">
+	<div class="text-center ">
+        <h2><b>A Uniffed Framework for Foreign Accent Conversion and Text to Speech</b></h2>
+        <p class="fst-italic mb-0 ">
+			<br>
+            <b>
+			Zhuangfei Cheng<sup>1</sup>, Guangyan Zhang<sup>2</sup>, Zehai Tu<sup>2</sup>, Yangyang Song<sup>1</sup>, Shuiyang Mao<sup>3</sup>, Yiwen Guo<sup>4</sup>, Jiasong Wu<sup>3</sup> <br>
+			</b><p></p>
+        </p>
+        <p style="line-height: 1.5;" class="fst-italic mb-0 ">
+        <sup>1</sup>Southeast University, China <br>  <sup>2</sup>LIGHTSPEED, China <br> <sup>3</sup>Tencent Hunyuan, China <br> <sup>4</sup>Independent Researcher, China <br>
+        </p>
+        <p></p>
+	</div>
+	<p>
+        <b>Abstract.</b> 
+        Foreign accent conversion (FAC) in speech processing remains a challenging task. Building on the remarkable success of large language models (LLMs) in Text-to-Speech (TTS) tasks, this study investigates the adaptation of LLM-based techniques for FAC. Specifically, we first present a novel tokenizer named Speech Tokenizer that extracts speech content tokens by incorporating the connectionist temporal classification (CTC) method during codebook discretization. We then performed concurrent training of both the FAC and TTS models, leading to faster convergence and higher-quality synthesized speech compared to isolated training of the FAC. Furthermore, capitalizing on the salient properties of our derived discrete speech representations, we propose the SpeechRestorer architecture as a postprocessing module for refining LLM-generated outputs. This component effectively mitigates stochastic errors inherent in LLM inference pipelines while enhancing the prosodic continuity.		<br>
+
+		<br>
+		<br>
+			This page is <b> for research demonstration purposes </b> only.
+		<br>
+
+      </p>
+</div>
+		
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded ">		
+	<h2 id="model-overview " style="text-align:center;">The Unified Framework</h2>
+	<p>
+		The Unified Framework consists of Speech Tokenizer and AR Model.
+	</p>
+    <body>
+        <div class="image-container">
+            <!-- 第一幅图及其标题 -->
+            <div class="image-wrapper1">
+                <img src="pics/骨干模型.jpg" alt="Image 1">
+                <p class="image-caption"><b>fig1</b>: The overview of Speech Tokenizer. It extracts speech into semantic discrete tokens and uses these discrete tokens along with the speaker encoder and prosody to reconstruct the speech.</p>
+            </div>
+            <!-- 第二幅图及其标题 -->
+            <div class="image-wrapper2">
+                <img src="pics/FAC.jpg " alt="Image 2">
+                <p class="image-caption"><b>fig2</b>: Training and inference processes of the AR Model and SpeechRestorer: During the training phase, the two modules are trained separately. In the inference phase, SpeechRestorer performs post-processing on the output of the AR Model. For training, all speech signals are converted into discrete speech tokens via the Content Encoder module for model training.</p>
+            </div>
+        </div>
+	</body>
+	
+	<body>
+		
+	</body>
+
+
+</div>
+
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded ">	
+	<h2 id=Ethics-Statement style="text-align:center;">	
+		Notes
+	</h2>
+    <ul>
+        <li>YKWK's native language is Korean</li>
+        <li>TXHC's native language is Chinese</li>
+        <li>Dataset (L2-ARCTIC corpus [1]): <a href="https://psi.engr.tamu.edu/l2-arctic-corpus/">https://psi.engr.tamu.edu/l2-arctic-corpus/</a></li>
+    </ul>
+	<ul>
+        <li><b>Input speech</b>: original unmodified L2 speech recordings</li>
+        <li><b>Baseline</b>: Zero-Shot Foreign Accent Conversion without a Native Reference [2]</li>
+    </ul>
+</div>
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded ">
+	<h2 id="sr-samples " style="text-align:center;">Foreign accent conversion Samples</h2>
+		<div class="table-responsive pt-3 ">
+			<table class="table table-hover pt-2 ">
+			<thead>
+			<tr>
+			<th style="text-align:center ">L2 speaker</th>
+			<th style="text-align:center ">Text</th>
+			<th style="text-align:center ">Input speech</th>
+			<th style="text-align:center ">Baseline</th>
+			<th style="text-align:center ">Ours</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+            <td rowspan="3">YKWK</td>
+			<td style="text-align:left;vertical-align:middle;width:500px ">He had fulfilled his duty and paid properly.</td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/1/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/1/his.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/1/ours.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			<tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">But already he had composed himself.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/2/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			    <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/2/his.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			    <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/2/ours.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			<tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">The Russian music player, the Count, was her obedient slave.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/3/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/3/his.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/3/ours.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+			<tr>
+                <td rowspan="3">TXHC</td>
+				<td style="text-align:left;vertical-align:middle;width:500px ">What an excited whispering and conferring took place.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/4/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/4/his.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/4/ours.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+            <tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">Thus he turned the tenets and jargon of psychology back on me.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/5/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/5/his.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/5/ours.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+            <tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">You were making them talk shop, Ruth charged him.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/6/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/6/his.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+			<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="AC/6/ours.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+			</tr>
+
+			</tbody>
+			</table>
+		</div>
+</div>
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded ">
+	<h2 id="sr-samples " style="text-align:center;">Text-to-Speech Samples</h2>
+		<div class="table-responsive pt-3 ">
+			<table class="table table-hover pt-2 ">
+			<thead>
+			<tr>
+			<th style="text-align:center ">Text</th>
+			<th style="text-align:center ">Prompt</th>
+			<th style="text-align:center ">Yourtts</th>
+			<th style="text-align:center ">NaturalSpeech 2</th>
+            <th style="text-align:center ">w|o SpeechRestorer</th>
+			<th style="text-align:center ">Ours</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td style="text-align:left;vertical-align:middle;width:500px ">he acts as though he had not expected us.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/1/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/1/YourTTS.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/1/src_zero_shot_result.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/1/obert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/1/wbert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            </tr>
+			<td style="text-align:left;vertical-align:middle;width:500px ">as used in the speech of everyday life the word carries an undertone of deprecation.</td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/2/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/2/YourTTS.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/2/src_zero_shot_result.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/2/obert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/2/wbert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+        </tr>
+			<td style="text-align:left;vertical-align:middle;width:500px ">from rubbing shoulders with scientists in our little universe by the botanical gardens the boy had come to know a thing or two.</td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/3/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/3/YourTTS.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/3/src_zero_shot_result.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/3/obert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/3/wbert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+        </tr>
+			<td style="text-align:left;vertical-align:middle;width:500px ">they were both remembering what the woman had said when she took the money god give you a happy love.</td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/4/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/4/YourTTS.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/4/src_zero_shot_result.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/4/obert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/4/wbert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+        </tr>
+			<td style="text-align:left;vertical-align:middle;width:500px ">come we'll have our coffee in the other room and you can smoke.</td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/5/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/5/YourTTS.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/5/src_zero_shot_result.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/5/obert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/5/wbert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+        </tr>
+			<td style="text-align:left;vertical-align:middle;width:500px ">four or five of the latter only lingered about the door of the prison of uncas wary but close observers of the manner of their captive.</td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/6/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/6/YourTTS.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/6/src_zero_shot_result.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/6/obert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/6/wbert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+        </tr>
+			<td style="text-align:left;vertical-align:middle;width:500px ">in the debate between the senior societies her defence of the fifteenth amendment had been not only a notable bit of reasoning but delivered with real enthusiasm.</td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/7/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/7/YourTTS.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/7/src_zero_shot_result.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/7/obert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/7/wbert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+        </tr>
+			<td style="text-align:left;vertical-align:middle;width:500px ">it is a gleaner bringing down her one sheaf of corn to an old watermill itself mossy and rent scarcely able to get its stones to turn.</td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/8/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/8/YourTTS.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/8/src_zero_shot_result.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/8/obert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/8/wbert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+        </tr>
+            <td style="text-align:left;vertical-align:middle;width:500px ">ten days were consumed in these negotiations but the spirit of vengeance refused to yield.</td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/10/src.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/10/YourTTS.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/10/src_zero_shot_result.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/10/obert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="TTS/10/wbert.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+        </tr>
+			</tbody>
+			</table>
+		</div>
+</div>
+
+
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded ">
+	<h2 id="sr-samples " style="text-align:center;">Voice Conversion Samples</h2>
+	<div class="table-responsive pt-3 ">
+		
+		<table class="table table-hover pt-2 "> 
+		<thead>
+			<tr>
+				<th style="text-align:center ">Text</th>
+				<th style="text-align:center ">Source</th>
+				<th style="text-align:center ">Prompt</th>
+                <th style="text-align:center ">Yourtts</th>
+                <th style="text-align:center ">FreeVC</th>
+                <th style="text-align:center ">Ours-Kmeans</th>
+                <th style="text-align:center ">Ours</th>
+			</tr>
+		</thead>
+		<tbody>	
+			<tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">Gad your letter came just in time.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/1/accent.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/1/speaker.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/1/YourTTS_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/1/Free_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/1/Ours-kmeans.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/1/VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            </tr>
+			<tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">We are both children together.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/2/accent.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/2/speaker.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/2/YourTTS_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/2/Free_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/2/Ours-kmeans.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/2/VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            </tr>	
+			<tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">We must achieve our own salvation.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/3/accent.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/3/speaker.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/3/YourTTS_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/3/Free_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/3/Ours-kmeans.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/3/VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            </tr>
+            <tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">Knowing him i review the old scandinavian myths with clearer understanding.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/4/accent.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/4/speaker.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/4/YourTTS_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/4/Free_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/4/Ours-kmeans.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/4/VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            </tr>
+            <tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">The gray eyes faltered the flush deepened.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/5/accent.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/5/speaker.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/5/YourTTS_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/5/Free_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/5/Ours-kmeans.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/5/VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            </tr>
+            <tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">They are not regular oyster pirates nicholas continued.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/6/accent.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/6/speaker.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/6/YourTTS_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/6/Free_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/6/Ours-kmeans.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/6/VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            </tr>
+            <tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">Author of the danger trail philip steels etc.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/7/accent.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/7/speaker.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/7/YourTTS_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/7/Free_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/7/Ours-kmeans.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/7/VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            </tr>
+            <tr>
+				<td style="text-align:left;vertical-align:middle;width:500px ">And right there i saw and knew it all.</td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/8/accent.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/8/speaker.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+				<td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/8/YourTTS_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/8/Free_VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/8/Ours-kmeans.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align:center "><audio controls="controls " style="width:160px;"><source src="VC/8/VC.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+            </tr>
+
+
+
+		</tbody>
+		</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded ">	
+	<h2 id=Ethics-Statement style="text-align:center;">	
+		References
+	</h2>
+	<p>[1] G. Zhao <i>et al</i>., "L2-ARCTIC: A non-native English speech corpus," in <i>Proc. Interspeech</i>, 2018, pp. 2783-2787.</p>
+    <p>[2] W. Quamer, A. Das <i>et al</i>., "Zero-shot foreign accent conversion without a native reference". in <i>Proc. Interspeech</i>, 2022, pp. 2783-2787.</p>
+</div>
+
+
+
+</article>
+</main>
+</div>
+
+</body>
+</html>
